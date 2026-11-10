@@ -392,6 +392,8 @@ Cada módulo responde a una pregunta que un atacante se hace durante el reconoci
 | SARIF `.sarif` | `--sarif` | Plataformas de CI/CD y *code scanning* |
 
 Con un dominio los informes se guardan en el directorio actual; con `-f` se crea la carpeta `rd-check_<lista>_<fecha>`.
+> [!NOTE]
+> rd-check muestra los resultados en **español** por defecto, pero también puede generarlos en **inglés**: añade `--lang en` y tanto la salida en consola como los informes (Markdown, CSV, JSON, HTML y SARIF) se crearán en inglés. La ayuda también está disponible en ambos idiomas con `--help --lang en`.
 
 ### Seguimiento continuo y CI/CD
 
