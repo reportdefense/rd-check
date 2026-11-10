@@ -21,7 +21,7 @@
 
 ## Qué es rd-check
 
-**rd-check** es una herramienta de línea de comandos para que los **administradores de sistemas** obtengan, en pocos minutos, **visibilidad sobre los puntos débiles** de sus sitios web y subdominios.
+**rd-check** es una herramienta de línea de comandos que muestra a los administradores de sistemas, en pocos minutos, lo mismo que vería un atacante: los puntos débiles de sus sitios web y subdominios.
 
 Antes de atacar, un adversario hace **reconocimiento**: averigua qué protecciones tienes, qué software usas, dónde está tu login y si puede llegar a tu servidor sin pasar por el WAF. **rd-check automatiza ese mismo reconocimiento para el defensor**, de modo que tú encuentras las debilidades y las corriges antes de que otra persona las aproveche.
 
