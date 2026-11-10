@@ -24,6 +24,8 @@
 **rd-check** es una herramienta de línea de comandos desarrollada por el equipo de **Report Defense LTDA** para que los **administradores de sistemas** obtengan, en pocos minutos, **visibilidad sobre los puntos débiles** de sus sitios web y subdominios.
 
 Antes de atacar, un adversario hace **reconocimiento**: averigua qué protecciones tienes, qué software usas, dónde está tu login y si puede llegar a tu servidor sin pasar por el WAF. **rd-check automatiza ese mismo reconocimiento para el defensor**, de modo que tú encuentras las debilidades y las corriges antes de que otra persona las aproveche.
+
+rd-check ha sido diseñada a partir de la experiencia del equipo en **pentesting y auditorías de seguridad**, y desarrollada con el apoyo de **agentes de IA** para acelerar la programación, las pruebas y la documentación.
 <br>
 <br>
 <div align="center">
