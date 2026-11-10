@@ -4,11 +4,12 @@
 
 <br>
 
-<img src="https://img.shields.io/badge/version-1.1.0-39c5cf?style=for-the-badge&labelColor=0a0e14" alt="version">
-<img src="https://img.shields.io/badge/python-3.9+-39c5cf?style=for-the-badge&logo=python&logoColor=39c5cf&labelColor=0a0e14" alt="python">
-<img src="https://img.shields.io/badge/lang-ES%20%7C%20EN-39c5cf?style=for-the-badge&labelColor=0a0e14" alt="idiomas">
-<img src="https://img.shields.io/badge/output-MD%20%C2%B7%20CSV%20%C2%B7%20JSON%20%C2%B7%20HTML%20%C2%B7%20SARIF-39c5cf?style=for-the-badge&labelColor=0a0e14" alt="formatos">
-<img src="https://img.shields.io/badge/uso-defensivo-3fb950?style=for-the-badge&labelColor=0a0e14" alt="uso defensivo">
+<img src="https://img.shields.io/badge/python-3.9+-007ec6" alt="python 3.9+">
+<img src="https://img.shields.io/badge/License-MIT-dfb317" alt="License MIT">
+<img src="https://img.shields.io/badge/Library-requests%20%7C%20Selenium-e05d44" alt="Library requests | Selenium">
+<img src="https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-9f9f9f" alt="Platform Linux | macOS | Windows">
+<img src="https://img.shields.io/badge/version-1.1.0-39c5cf" alt="version 1.1.0">
+<img src="https://img.shields.io/badge/lang-ES%20%7C%20EN-4c1" alt="lang ES | EN">
 
 <br><br>
 
