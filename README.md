@@ -13,65 +13,40 @@
 
 <br><br>
 
-**`[ VER LO QUE VE UN ATACANTE · ANTES QUE EL ATACANTE ]`**
-
-[`INSTALACIÓN`](#_-instalación) · [`USO`](#_-uso) · [`MÓDULOS`](#_-módulos) · [`INFORMES`](#_-informes) · [`OPCIONES`](#_-opciones) · [`DISCLAIMER`](#_-disclaimer)
+[`INSTALACIÓN`](#instalación) · [`USO`](#uso) · [`MÓDULOS`](#módulos) · [`INFORMES`](#informes) · [`OPCIONES`](#opciones) · [`DISCLAIMER`](#disclaimer)
 
 </div>
 
 ---
 
-## `>_` Qué es rd-check
+## Qué es rd-check
 
 **rd-check** es una herramienta de línea de comandos desarrollada por el equipo de **Report Defense LTDA** para que los **administradores de sistemas** obtengan, en pocos minutos, **visibilidad sobre los puntos débiles** de sus sitios web y subdominios.
 
 Antes de atacar, un adversario hace **reconocimiento**: averigua qué protecciones tienes, qué software usas, dónde está tu login y si puede llegar a tu servidor sin pasar por el WAF. **rd-check automatiza ese mismo reconocimiento para el defensor**, de modo que tú encuentras las debilidades y las corriges antes de que otra persona las aproveche.
-
+<br>
+<br>
 <div align="center">
 
 <img src="assets/demo.svg" alt="Demo de rd-check en terminal" width="100%">
 
-<sub><code>salida ilustrativa sobre example.com</code></sub>
+<sub><code>POC sobre example.com</code></sub>
 
 </div>
 
-<table>
-<tr>
-<td width="25%" align="center"><b><code>16</code></b><br><sub>módulos de análisis</sub></td>
-<td width="25%" align="center"><b><code>3</code></b><br><sub>niveles de severidad</sub></td>
-<td width="25%" align="center"><b><code>6</code></b><br><sub>formatos de salida</sub></td>
-<td width="25%" align="center"><b><code>curl</code></b><br><sub>reproducción de cada prueba</sub></td>
-</tr>
-</table>
+---
+
+## Cómo te adelanta al atacante
+
+<div align="center">
+
+<img src="assets/flow.svg" alt="Fases del atacante frente a las comprobaciones de rd-check" width="100%">
+
+</div>
 
 ---
 
-## `>_` Cómo te adelanta al atacante
-
-```mermaid
-%%{init: {'theme':'dark', 'themeVariables': {'primaryColor':'#0a0e14','primaryTextColor':'#c9d1d9','primaryBorderColor':'#39c5cf','lineColor':'#39c5cf','secondaryColor':'#11161d','tertiaryColor':'#11161d'}}}%%
-flowchart LR
-    subgraph ATK["  FASE DEL ATACANTE  "]
-        direction TB
-        A1["Reconocimiento<br/>DNS · IPs · proveedores"] --> A2["Identificar defensas<br/>WAF · CDN · anti-bot"]
-        A2 --> A3["Buscar el bypass<br/>IP de origen · Host header"]
-        A3 --> A4["Atacar la puerta<br/>login sin captcha ni límite"]
-    end
-    subgraph RD["  RESPUESTA DE rd-check  "]
-        direction TB
-        R1["Inventario DNS, ASN,<br/>SPF/DMARC, IP compartida"] --> R2["Verifica si el WAF<br/>bloquea de verdad"]
-        R2 --> R3["Prueba origen, IP directa<br/>y Host header"]
-        R3 --> R4["Mide captcha, rate limit<br/>y ráfaga sobre el login"]
-    end
-    A1 -.-> R1
-    A2 -.-> R2
-    A3 -.-> R3
-    A4 -.-> R4
-```
-
----
-
-## `>_` Disclaimer
+## Disclaimer
 
 > [!CAUTION]
 > **Usa rd-check únicamente sobre dominios que sean tuyos o para los que tengas autorización expresa y por escrito de su propietario.**
@@ -85,13 +60,18 @@ flowchart LR
 
 ---
 
-## `>_` Instalación
-
-Descarga o clona este repositorio y, dentro de la carpeta:
+## Instalación
 
 ```bash
+git clone https://github.com/reportdefense/rd-check.git
+cd rd-check
+python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
+python3 rd-check.py
 ```
+
+> [!NOTE]
+> En Windows, activa el entorno virtual con `venv\Scripts\activate` en lugar de `source venv/bin/activate`.
 
 | Componente | Requerido | Para qué |
 |:--|:--:|:--|
@@ -104,7 +84,7 @@ pip install -r requirements.txt
 
 ---
 
-## `>_` Uso
+## Uso
 
 ```bash
 # ── objetivo único ─────────────────────────────────────────────
@@ -131,7 +111,7 @@ python3 rd-check.py -h
 
 ---
 
-## `>_` Módulos
+## Módulos
 
 Cada módulo responde a una pregunta que un atacante se hace durante el reconocimiento.
 
@@ -400,19 +380,7 @@ Cada módulo responde a una pregunta que un atacante se hace durante el reconoci
 
 ---
 
-## `>_` Severidades
-
-| Nivel | Significado | Ejemplos |
-|:--:|:--|:--|
-| ![ALTA](https://img.shields.io/badge/ALTA-f85149?style=flat-square) | Explotable de forma directa o con impacto inmediato | Origen accesible saltando el WAF, Host reflejado, certificado inválido, login sin protección |
-| ![MEDIA](https://img.shields.io/badge/MEDIA-d29922?style=flat-square) | Debilidad que facilita un ataque o reduce defensas | WAF que no filtra, versiones expuestas, TLS obsoleto, faltan cabeceras, DMARC `p=none` |
-| ![INFO](https://img.shields.io/badge/INFO-6e7681?style=flat-square) | Dato de contexto o a confirmar manualmente | Sin cabeceras de rate limit, sin SPF, login en otro subdominio |
-
-Cada hallazgo incluye el **comando `curl` para reproducirlo** y verificarlo a mano.
-
----
-
-## `>_` Informes
+## Informes
 
 | Formato | Se genera | Uso típico |
 |:--|:--:|:--|
@@ -443,19 +411,30 @@ python3 rd-check.py example.com --passive --fail-on high
 
 ---
 
-## `>_` Opciones
+## Opciones
+
+Todas estas opciones aparecen explicadas al ejecutar `python3 rd-check.py --help` (o `--help --lang en` para verlas en inglés).
 
 <details>
-<summary><b>Objetivo y pruebas</b></summary>
+<summary><b>Objetivo</b></summary>
 <br>
 
 | Opción | Descripción |
 |:--|:--|
 | `DOMINIO` | Dominio o URL a analizar |
-| `-f, --file FICHERO` | Lista de dominios, uno por línea (`-` = stdin) |
+| `-f, --file FICHERO` | Lista de dominios, uno por línea ('-' = stdin) |
+
+</details>
+
+<details>
+<summary><b>Pruebas</b></summary>
+<br>
+
+| Opción | Descripción |
+|:--|:--|
 | `--passive` | Solo observación: sin pruebas WAF, Host header, métodos, ráfaga ni origen |
 | `--burst N` | Ráfaga de N peticiones para confirmar el rate limit (máx. 200) |
-| `--origin IP` | IPv4 del servidor de origen para comprobar si se salta el CDN/WAF |
+| `--origin IP` | IPv4 del servidor de origen: comprueba si se salta el CDN/WAF |
 | `--no-selenium` | No renderizar con Chrome headless |
 | `--render-wait SEG` | Espera tras renderizar con Selenium (def. 2) |
 | `--verify-tls` | Verificar certificados en las peticiones HTTP |
@@ -469,10 +448,10 @@ python3 rd-check.py example.com --passive --fail-on high
 
 | Opción | Descripción |
 |:--|:--|
-| `-t, --threads N` | Dominios en paralelo (1–32, def. 3) |
+| `-t, --threads N` | Dominios en paralelo (1-32, def. 3) |
 | `--timeout SEG` | Tiempo máximo por petición (def. 10) |
 | `--max-rps N` | Límite de peticiones por segundo (0 = sin límite) |
-| `--retries N` | Reintentos ante 502/503/504 (0–5, def. 1) |
+| `--retries N` | Reintentos ante 502/503/504 (0-5, def. 1) |
 
 </details>
 
@@ -483,36 +462,47 @@ python3 rd-check.py example.com --passive --fail-on high
 | Opción | Descripción |
 |:--|:--|
 | `--no-dns` | Omitir todo el análisis DNS |
-| `--no-rdap` | No consultar RDAP |
+| `--no-rdap` | No consultar RDAP (propietario del rango IP) |
 | `--no-asn` | No consultar ASN (Team Cymru) |
-| `--no-shared-ip` | No buscar dominios en la misma IP |
-| `--resolver IP` | Servidor DNS (def. `1.1.1.1`) |
+| `--no-shared-ip` | No buscar otros dominios en la misma IP |
+| `--resolver IP` | Servidor DNS (def. 1.1.1.1) |
 | `--dns-timeout SEG` | Tiempo máximo por consulta DNS (def. 3) |
 
 </details>
 
 <details>
-<summary><b>Informes y otros</b></summary>
+<summary><b>Informes</b></summary>
 <br>
 
 | Opción | Descripción |
 |:--|:--|
 | `-o, --output NOMBRE` | Nombre del informe o de la carpeta de salida |
-| `--json` · `--html` · `--sarif` | Formatos adicionales |
+| `--json` | Generar también JSON |
+| `--html` | Generar también HTML |
+| `--sarif` | Generar también SARIF |
 | `--baseline JSON` | Comparar con un informe JSON anterior |
-| `--fail-on never\|medium\|high` | Código de salida 2 según la severidad encontrada |
-| `--lang es\|en` | Idioma de la salida (def. `es`) |
+| `--fail-on {never,medium,high}` | Salir con código 2 si hay hallazgos de esa severidad (CI/CD) |
+| `--lang {es,en}` | Idioma de la salida (def. es) |
+
+</details>
+
+<details>
+<summary><b>Otros</b></summary>
+<br>
+
+| Opción | Descripción |
+|:--|:--|
 | `-q, --quiet` | Salida mínima en consola |
-| `--no-color` | Desactivar colores (también respeta `NO_COLOR`) |
+| `--no-color` | Desactivar colores (también NO_COLOR) |
 | `--debug` | Registrar cada petición |
-| `-h, --help` | Ayuda completa |
-| `-V, --version` | Versión |
+| `-h, --help` | Mostrar la ayuda completa |
+| `-V, --version` | Mostrar la versión |
 
 </details>
 
 ---
 
-## `>_` Privacidad y servicios externos
+## Privacidad y servicios externos
 
 Para enriquecer el análisis, rd-check consulta servicios públicos que **reciben la IP o el dominio analizado**:
 
@@ -528,7 +518,7 @@ Para enriquecer el análisis, rd-check consulta servicios públicos que **recibe
 
 ---
 
-## `>_` Buenas prácticas
+## Buenas prácticas
 
 - [x] Empieza con `--passive` y pasa a las pruebas activas solo con autorización.
 - [x] Avisa a operaciones o al proveedor del WAF antes de lanzar `--burst`, para que no lo confundan con un ataque real.
@@ -540,18 +530,26 @@ Para enriquecer el análisis, rd-check consulta servicios públicos que **recibe
 
 <div align="center">
 
-### `[ REPORT DEFENSE LTDA ]`
+<br>
+
+<a href="https://www.reportdefense.com"><img src="assets/rd-logo.png" alt="Report Defense IT security" width="240"></a>
+
+<a href="https://www.reportdefense.com"><b>www.reportdefense.com</b></a>
+
+<br>
 
 **rd-check** es una herramienta desarrollada por el equipo de **Report Defense LTDA** y compartida con la comunidad<br>para ayudar a los administradores de sistemas a obtener visibilidad rápida de sus puntos débiles.
 
 <br>
 
-<a href="https://youtube.com/@reportdefense"><img src="https://img.shields.io/badge/YouTube-@reportdefense-f85149?style=for-the-badge&logo=youtube&logoColor=white&labelColor=0a0e14" alt="YouTube"></a>
-<a href="https://instagram.com/reportdefense"><img src="https://img.shields.io/badge/Instagram-reportdefense-c13584?style=for-the-badge&logo=instagram&logoColor=white&labelColor=0a0e14" alt="Instagram"></a>
-<a href="https://linkedin.com/company/reportdefense-it"><img src="https://img.shields.io/badge/LinkedIn-reportdefense--it-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=0a0e14" alt="LinkedIn"></a>
+<sub>SÍGUENOS</sub>
 
-<br><br>
+<a href="https://youtube.com/@reportdefense"><img src="https://img.shields.io/badge/%3E__youtube-@reportdefense-0d1117?style=for-the-badge&logo=youtube&logoColor=f85149&labelColor=0a0e14" alt="YouTube"></a>
+<a href="https://instagram.com/reportdefense"><img src="https://img.shields.io/badge/%3E__instagram-reportdefense-0d1117?style=for-the-badge&logo=instagram&logoColor=e1306c&labelColor=0a0e14" alt="Instagram"></a>
+<a href="https://linkedin.com/company/reportdefense-it"><img src="https://img.shields.io/badge/%3E__linkedin-reportdefense--it-0d1117?style=for-the-badge&logo=data:image/svg%2Bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0iIzBhNjZjMiIgZD0iTTIwLjQ1IDIwLjQ1aC0zLjU1di01LjU3YzAtMS4zMy0uMDMtMy4wNC0xLjg1LTMuMDQtMS44NiAwLTIuMTQgMS40NS0yLjE0IDIuOTR2NS42N0g5LjM1VjloMy40MXYxLjU2aC4wNWMuNDgtLjkgMS42NC0xLjg1IDMuMzctMS44NSAzLjYgMCA0LjI3IDIuMzcgNC4yNyA1LjQ2djYuMjh6TTUuMzQgNy40M2EyLjA2IDIuMDYgMCAxIDEgMC00LjEyIDIuMDYgMi4wNiAwIDAgMSAwIDQuMTJ6TTcuMTIgMjAuNDVIMy41NlY5aDMuNTZ2MTEuNDV6Ii8%2BPC9zdmc%2B&labelColor=0a0e14" alt="LinkedIn"></a>
 
-<sub><code>// uso exclusivamente defensivo y educativo · Report Defense LTDA no se responsabiliza del uso indebido</code></sub>
+<br>
+
+<sub><code>Uso exclusivamente defensivo y educativo · Report Defense LTDA no se responsabiliza del uso indebido</code></sub>
 
 </div>
