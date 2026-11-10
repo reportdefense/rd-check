@@ -25,7 +25,7 @@
 
 Antes de atacar, un adversario hace **reconocimiento**: averigua qué protecciones tienes, qué software usas, dónde está tu login y si puede llegar a tu servidor sin pasar por el WAF. **rd-check automatiza ese mismo reconocimiento para el defensor**, de modo que tú encuentras las debilidades y las corriges antes de que otra persona las aproveche.
 
-rd-check es una herramienta creada por el equipo de **Report Defense LTDA**: la lógica de cada módulo nace de nuestra experiencia en **pentesting y ejercicios de RedTeam**, y el desarrollo se ha apoyado en **agentes de IA** para acelerar la programación, las pruebas y la documentación. Todo el código ha sido **revisado y validado por el equipo** antes de su publicación.
+Detrás de rd-check está el equipo de **Report Defense LTDA**: la lógica de cada módulo nace de nuestra experiencia en **pentesting y ejercicios de Red Team**, y el desarrollo se ha apoyado en **agentes de IA** para acelerar la programación, las pruebas y la documentación. Todo el código ha sido **revisado y validado por el equipo** antes de su publicación.
 <br>
 <br>
 <div align="center">
